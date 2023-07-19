@@ -1,0 +1,23 @@
+declare
+	cursor c1 is select SID,SNAME,MARKS from Student3;
+	id Student3.SID%type;
+	sname Student3.SNAME%type;
+	marks Student3.MARKS%type;
+	exp1 Exception;
+begin
+	open c1;
+	loop
+	fetch c1 into id,sname,marks;
+	if marks<40 then
+	 raise exp1;
+	else
+	 dbms_output.put_line(id||chr(9)||sname||chr(9)||marks);
+	end if;
+	exit when c1%notfound;
+	end loop;
+	close c1;
+Exception
+	when exp1 then
+		dbms_output.put_line('LOW_MARKS');
+end;
+/
